@@ -14,12 +14,12 @@ This repository includes additions to that script, implementing the following:
   The python script `fix_headers.py` removes any skipped levels (e.g. if no subsections were used) and automatically detects and numbers duplicate headings.
 
 - [x]  \bigbreak should be represented with `<p>`...`</p>` in the html. Solved: `sed -e 's/\\bigbreak/\\par\n\n/g'`
-- [x] `<em>` causes problems. Removed, but what about `<strong>`?? Also see: https://www.w3.org/TR/2016/NOTE-WCAG20-TECHS-20161007/H49 
+- [x] `<em>` causes problems. Removed  `<em>` and `<strong>`. This removes [semantic markup](https://www.w3.org/TR/2016/NOTE-WCAG20-TECHS-20161007/H49), which is an accessibility feature!   
 - [x] removed `<span style="color: uzh@blue">`. Mostly solved: sed command over html. requires --wrap=none setting in pandoc. fails when other html tag is nested in span.
 - [x] replace `$\rightarrow$`. Solved: `sed -e 's/\$\s*\\rightarrow\s*\$/→/g'`
 - [x] PDF images are converted to png before calling pandoc.
-- [ ] Bibliography is not present in html
-- [ ] Videos are not present in html
+- [x] `--citeproc` flag includes bibliography in html
+- [ ] Videos are not present in html. Idea: Replace \movie with raw html. Has tendency to break other parts of the file.
 
 
 ## Requirements

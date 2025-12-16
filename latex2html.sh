@@ -13,9 +13,11 @@ if ! command -v pandoc > /dev/null; then
     exit 1
 fi
 
-# Verzeichnis für PNGs erstellen
-imgdir="${texfile%.tex}_pdfimages"
-mkdir -p "$imgdir"
+# Check if ImageMagick is installed
+if ! command -v convert > /dev/null; then
+    echo "Error: ImageMagick is not installed"
+    exit 1
+fi
 
 
 # Temporary file
@@ -68,12 +70,13 @@ sed -e 's/\\begin\s*{frame}\s*{\([^}]*\)}\s*{\([^}]*\)}/\\begin{frame}\n\\framet
 mv "${tmpfile}.converted" "$tmpfile"
 
 # Convert to HTML
-pandoc "$tmpfile" -f latex -t html --standalone --shift-heading-level-by=1 --wrap=none --embed-resources --mathjax > "${1%.tex}.html"
+pandoc "$tmpfile" -f latex -t html --standalone --shift-heading-level-by=1 --wrap=none --embed-resources --mathjax --citeproc > "${1%.tex}.html"
 
 # Remove uzh@blue spans and <em> tags
 sed -E -i.bak \
   -e 's#<span style="[^"]*uzh@blue[^"]*">([^<]*)</span>#\1#g' \
   -e 's#<em>([^<]*)</em>#\1#g' \
+  -e 's#<strong>([^<]*)</strong>#\1#g' \
   "${1%.tex}.html"
 rm "${1%.tex}.html.bak"
 
