@@ -8,7 +8,7 @@ This repository includes additions to that script, implementing the following:
   - \section --> h2
   - \subsection --> h3
   - \frametitle --> h4
-  - subsubsection --> h4 ()
+  - \subsubsection --> h4
   - \framesubtitle h5
   
   The python script `fix_headers.py` removes any skipped levels (e.g. if no subsections were used) and automatically detects and numbers duplicate headings.
